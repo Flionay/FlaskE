@@ -1,10 +1,11 @@
-from flask import Flask 
+from flask import Flask,render_template
 app = Flask(__name__)
 
-@app.route("/index/")
+@app.route("/")
 def index():
-    return "hello flask"
+    return render_template("index.html",name="FLASK")
 
-@app.route("/<name>")
-def hello(name):
-    return f"hello {name}"
+@app.route("/user")
+def user():
+    users = ["James","Kobe","Curry"]
+    return render_template("user.html",users=users)
