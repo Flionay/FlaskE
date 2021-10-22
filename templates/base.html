@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {% block head %}
+    <title>{% block title%}{% endblock %} - My Application</title>
+    {% endblock%}
 </head>
 <body>
-    <ul>
-        {% for i in users%}
-        <li>{{i}}</li>
-        {%endfor %}
-    </ul>
+    {% block body%}
+    <h2>This is base body!</h2>
+    {% endblock %}
 </body>
 </html>
