@@ -1,4 +1,4 @@
-from flask import Flask,render_template,session,redirect,url_for
+from flask import Flask,render_template,session,redirect,url_for,flash
 from Config import Config
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -30,13 +30,12 @@ def user():
     email = None
     form = NameForm()
     if form.validate_on_submit(): # 如果通过验证
-        name = form.name.data
-        email = form.email.data
-        form.name.data = ''  # 重制
-        form.email.data = ''
+        session['name'] = form.name.data
+        session['email'] = form.email.data
+        return redirect(url_for('user'))
 
     utc = datetime.utcnow()
-    return render_template("user.html",current_time=utc,form=form,name=name,email=email)
+    return render_template("user.html",current_time=utc,form=form,name=session.get('name'),email=session.get('email'))
 
 @app.errorhandler(404)
 def errorhandler(e):
