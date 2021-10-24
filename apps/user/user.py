@@ -1,3 +1,5 @@
+import hashlib
+
 from flask import Blueprint, render_template, request, redirect, url_for
 
 from flask_wtf import Form
@@ -18,10 +20,18 @@ class RegisterForm(Form):
     accept_tos = BooleanField("我接受隐私条约", validators=[DataRequired()])
     submit = SubmitField("提交")
 
+class LoginForm(Form):
+    name = StringField("名字", validators=[DataRequired()])
+    password = PasswordField("密码", validators=[DataRequired(), EqualTo('repassword', message='Passwords must match')])
+    submit = SubmitField("提交")
+
 
 @user_bp.route('/user')  # 用户主页
 def user_center():
-    return render_template('user/user_index.html')
+    # 查询数据库中所有用户
+    user = User.query.all()
+    print(user)
+    return render_template('user/user_index.html',users=user)
 
 
 @user_bp.route('/register', methods=['POST', 'GET'])
@@ -32,7 +42,7 @@ def user_register():
         # 创建实体对象
         user = User()
         user.username = form.name.data
-        user.password = form.password.data
+        user.password = hashlib.sha1(form.password.data.encode('utf-8')).hexdigest()
         user.email = form.email.data
 
         # 添加到数据库
@@ -45,6 +55,16 @@ def user_register():
     return render_template("user/register.html", form=form, name=print_name)
 
 
-@user_bp.route('/login')
+@user_bp.route('/login',methods=['POST', 'GET'])
 def user_login():
-    return '登陆'
+    form = LoginForm(request.form)
+    if request.method == 'POST':
+        pass_input = hashlib.sha1(form.password.data.encode('utf-8')).hexdigest()
+        res_list = User.query.filter_by(username=form.name.data)
+        for u in res_list:
+            if u.password == pass_input:
+                return '用户登陆成功！'
+        else:
+            return render_template('user/login.html', form=form, msg="用户名或密码错误")
+
+    return render_template('user/login.html',form=form)
