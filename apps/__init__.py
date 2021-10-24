@@ -6,8 +6,8 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired,Email
-from flask_sqlalchemy import SQLAlchemy
 
+from dao import db
 from apps.user.user import user_bp
 
 
@@ -16,8 +16,8 @@ def create_app():
     app.config.from_object(Config) 
     bootstrap = Bootstrap(app)  # 将应用实例传给构造函数
     m = Moment(app)
-    db = SQLAlchemy(app) # 数据库
+    db.init_app(app) # 数据库
 
     app.register_blueprint(user_bp)
-    print(app.url_map)
+    # print(app.url_map)
     return app
