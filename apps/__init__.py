@@ -12,7 +12,7 @@ from apps.user.user import user_bp
 
 
 def create_app():
-    app = Flask(__name__,template_folder='../templates/',static_folder='../static/')
+    app = Flask(__name__, template_folder='../templates/', static_folder='../static/') # type:Flask
     app.config.from_object(Config) 
     bootstrap = Bootstrap(app)  # 将应用实例传给构造函数
     m = Moment(app)
