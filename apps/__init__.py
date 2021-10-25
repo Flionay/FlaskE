@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired,Email
 
-from dao import db
+from exts import db
 from apps.user.user import user_bp
 
 

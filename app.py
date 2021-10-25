@@ -1,8 +1,8 @@
 from flask_script import Manager
 from apps import create_app
 from flask_migrate import Migrate, MigrateCommand
-from dao import db
-from apps.user.model import User
+from exts import db
+
 
 app = create_app()
 manager = Manager(app)  # 给app套了一个壳子，用来添加一些命令行操作，主要是数据库对应
