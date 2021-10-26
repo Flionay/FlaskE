@@ -1,43 +1,216 @@
-{% extends "bootstrap/base.html" %}
-
-{% block title %}Flasky{% endblock %}
 
 {% block head %}
-{{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-{% endblock %}
+    {% block title %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles -%}
+        {{ bootstrap.load_js() }}
+        {{ bootstrap.load_css() }}
+        <link href="/static/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        <script src="/static/js/myjs.js"></script>
+    {% endblock styles %}
+{% endblock head %}
 
 {% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
             <a class="navbar-brand" href="/">AngYi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link my-font-h2" aria-current="page" href="/index">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link my-font-h2" aria-current="page" href="/categories">分类</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link my-font-h2" href="#" aria-current="/about" >关于我</a>
+                    </li>
+                </ul>
+            </div>
+             <ul class="navbar-nav navbar-right">
+                    <li>
+                        <form class="d-flex" style="margin-bottom: 0px">
+                            <input  class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <!--        <button class="btn btn-outline" type="submit">Search</button>-->
+                        </form>
+                    </li>
+                    <li>
+                        <a href={{ url_for('user.login') }}><button type="button" class="btn btn-dark navbar-btn">登陆</button></a>
+                    </li>
+                    <li>
+                        <a href={{ url_for('user.register') }}><button type="button" class="btn btn-dark navbar-btn" onclick="">注册</button></a>
+                    </li>
+                </ul>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+    </nav>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    {% block page_content %}{% endblock %}
-</div>
+        <!-- main -->
+    <div class="container">
+        <div class="row">
+    <!--        left-->
+            <div class="col-md-5 col-md-offset-1" style="margin-top: 80px;margin-bottom: 80px">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src='/static/img/headimg.jpeg' alt="Card_image_cap" >
+                    <div class="card-body">
+                        <h4 class="card-title" style="text-align: center">AngYi</h4>
+                        <p class="card-text" style="text-align: center" ><span><i class="fa fa-map-marker"></i></span> Qing Dao</p>
+                        <p class="card-text" style="text-align: center" >自律给人自由。</p>
+                        <p class="card-text" id = "time_now" style="text-align: center">xxxx</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px;margin-top: 25px">
+                    <div class="card" style="width: 18rem;" >
+                        <div class="card-body">
+                            <h5 class="card-title">分类</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item" >科技
+                                <span class="badge" >15</span>
+                            </li>
+                            <li class="list-group-item" >生活
+                                <span class="badge" >10</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">标签</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+
+            </div>
+    <!--        right-->
+            <div class="col-md-6 col-md-offset-5" style="margin-top: 80px;margin-bottom: 80px"  >
+                <div class="card" style="height: 13rem; width:40em; margin-bottom: 15px" >
+                    <div class="row no-gutters" style="padding-top: 20px">
+                        <div class="col-md-8">
+                            <div class="card-body" style="vertical-align: middle;">
+
+                                <h5 class="my-font-title" ><a href="#" target="_blank">Card title></a></h5>
+                                <p class="my-font-description" >This is a wider card with s.</p>
+                                <p class="my-font-time"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-right: 25px" >
+                            <img alt="..." class="card-img">
+                        </div>
+                    </div>
+                </div>
+
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+
+                        <!-- 首页-->
+                        <li class="page-item" >
+                            <a class="page-link" aria-label="Previous">首页
+                            </a>
+                        </li>
+
+                        <!-- 上一页-->
+                        <li class="page-item" >
+                            <a class="page-link" >
+                                <i class="ace-icon fa fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" style="font-weight: bold;background: #0da2f012;" ></a>
+                            <a class="page-link" >                      </a>
+                        </li>
+                        <!--  下一页-->
+                        <li lass="page-item" >
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <!--  最后一页-->
+                        <li  class="page-item"  >
+                            <a class="page-link" >尾页</a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}
+    <!-- footer -->
+    <footer class="bg-dark text-center text-white col-12">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-facebook-f"></i
+                ></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-twitter"></i
+                ></a>
+
+                <!-- Google -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-google"></i
+                ></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-instagram"></i
+                ></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">AngYi.online</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    {% endblock %}
+
+    {% block scripts %}
+        <script>
+            var time = document.getElementById("time_now");
+            var today = new Date();
+            time.innerHTML=showLocale(today);
+            window.setTimeout("tick()", 1000);
+        </script>
+    {% endblock %}
 {% endblock %}
 
-{% block body %}
-{{ super() }}
-{{ moment.include_moment() }}
-{{ moment.locale('zh-cn')}}
-{% endblock %}
+
+{##}
+{#{% block body %}#}
+{#{{ super() }}#}
+{#{{ moment.include_moment() }}#}
+{#{{ moment.locale('zh-cn')}}#}
+{#{% endblock %}#}
 

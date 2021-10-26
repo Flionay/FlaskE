@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        var time = document.getElementById("time_now");
+        var today = new Date();
+        time.innerHTML=showLocale(today);
+        window.setTimeout("tick()", 1000);
+
+        var = document.getElementsByClassName("card-body");
+    </script>
+{% endblock %}
+

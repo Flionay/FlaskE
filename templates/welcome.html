@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+{% block head  %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/cover.css">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <body class="text-center">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+          <header class="masthead mb-auto">
+            <div class="inner">
+              <h3 class="masthead-brand">Welcome</h3>
+              <nav class="nav nav-masthead justify-content-center">
+                <a class="nav-link " href="{{ url_for('user.login') }}">登陆</a>
+                <a class="nav-link" href="{{ url_for('user.register') }}">注册</a>
+                <a class="nav-link" href="#">语言</a>
+              </nav>
+            </div>
+          </header>
+
+          <main role="main" class="inner cover">
+            <h1 class="cover-heading" style="font-size: 50px; margin-bottom: 50px">Ang Yi</h1>
+            <p class="lead"  style="font-size: 20px; margin-bottom: 50px">星垂平野阔，月涌大江流。</p>
+            <p class="lead">
+              <a href="{{ url_for('index.index') }}" class="btn btn-md btn-secondary" >进入博客</a>
+            </p>
+          </main>
+
+          <footer class="mastfoot mt-auto">
+            <div class="inner">
+              <p><a href="https://getbootstrap.com/">CopyRight AngYi</a></p>
+            </div>
+          </footer>
+        </div>
+  </body>
+{% endblock %}
