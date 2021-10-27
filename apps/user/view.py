@@ -1,6 +1,6 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect, url_for
 from flask_wtf import FlaskForm
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import TextField, StringField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import InputRequired, DataRequired, Email, EqualTo
 
@@ -10,8 +10,14 @@ from exts import db
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 
+class LoginForm(FlaskForm):
+    name = StringField("用户名", validators=[DataRequired()])
+    password = PasswordField("密码", validators=[DataRequired()])
+    submit = SubmitField("提交")
+
+
 class RegisterForm(FlaskForm):
-    name = StringField("名字", validators=[DataRequired()])
+    name = StringField("用户名", validators=[DataRequired()])
     phone = StringField("手机", validators=[DataRequired()])
     email = StringField("email", validators=[Email()])
     password = PasswordField("密码", validators=[DataRequired(), EqualTo('repassword', message='Passwords must match')])
@@ -40,6 +46,17 @@ def register():
     return render_template("user/register.html", form=form)
 
 
-@user_bp.route("/login")
+@user_bp.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("index.html")
+    form = LoginForm()
+    if request.method == 'POST' and form.validate():
+        user_name = form.name.data
+        password = form.password.data
+        res_list = User.query.filter_by(username=user_name).all()
+        for user in res_list:
+            if check_password_hash(user.password, password):
+                return redirect(url_for('index.index'))
+        else:
+            return render_template("user/login.html", form=form, msg="用户名或密码错误，请重新输入")
+
+    return render_template("user/login.html", form=form, msg=None)
