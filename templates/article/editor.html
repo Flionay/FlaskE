@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+ {% from 'bootstrap/form.html' import render_field %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    {{ super() }}
+{% endblock %}
+{% block content %}
+
+<div class="container content-container">
+    <div class="row justify-content-center">
+        <div class="col-12 inline-form-container">
+{#            <div class="col-lg-offset-1 col-md-8" style="margin-left: 220px">#}
+            <form method="post" style="margin-top: 90px;width: 100%">
+                {{ form.csrf_token() }}
+                {{ render_field(form.title,style="width:50%") }}
+                {{ render_field(form.categories,style="width:50%") }}
+
+                <div id="test-editormd" >{{ render_field(form.text,style="display:none;") }}</div>
+
+            </form>
+{#            </div>#}
+        </div>
+    </div>
+</div>
+
+
+    <script src="{{ url_for('static',filename='editormd/examples/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/src/editormd.js') }}"></script>
+    <script type="text/javascript">
+        var testEditor;
+        $(function () {
+            testEditor = editormd("test-editormd", {
+                width: "100%",
+                height: 540,
+                syncScrolling: "single",
+                path: "{{ url_for('static',filename='editormd/lib/') }}"
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+{% endblock %}

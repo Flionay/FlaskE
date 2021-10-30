@@ -13,3 +13,5 @@ class Article(db.Model):
     love_num = db.Column(db.Integer, default=0)
     # 外键 对应user id
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)

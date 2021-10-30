@@ -7,6 +7,7 @@
         {{ bootstrap.load_css() }}
         <link href="/static/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/mystyle.css">
         <script src="/static/js/myjs.js"></script>
     {% endblock styles %}
 {% endblock head %}
@@ -31,7 +32,7 @@
                     </li>
                 </ul>
             </div>
-             <ul class="navbar-nav navbar-right">
+             <ul class="nav navbar-nav navbar-right">
                     <li>
                         <form class="d-flex" style="margin-bottom: 0px">
                             <input  class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -39,10 +40,19 @@
                         </form>
                     </li>
                     <li>
-                        <a href={{ url_for('user.login') }}><button type="button" class="btn btn-dark navbar-btn">登陆</button></a>
+                        {% if user %}
+                            <a href={{ url_for('user.login') }}><button type="button" class="btn btn-dark navbar-btn">{{ user.username }}</button></a>
+                        {% else %}
+                            <a href={{ url_for('user.login') }}><button type="button" class="btn btn-dark navbar-btn">登陆</button></a>
+                        {% endif %}
                     </li>
                     <li>
-                        <a href={{ url_for('user.register') }}><button type="button" class="btn btn-dark navbar-btn" onclick="">注册</button></a>
+                        {% if user %}
+                            <a href={{ url_for('user.logout') }}><button type="button" class="btn btn-dark navbar-btn">退出</button></a>
+                            <a href={{ url_for('article.publish_article') }}><button type="button" class="btn btn-dark navbar-btn">发表博文</button></a>
+                        {% else %}
+                            <a href={{ url_for('user.register') }}><button type="button" class="btn btn-dark navbar-btn" onclick="">注册</button></a>
+                        {% endif %}
                     </li>
                 </ul>
         </div>

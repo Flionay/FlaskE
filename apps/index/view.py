@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
+
+from apps.user.model import User
 
 index_bp = Blueprint('index', __name__)
 
@@ -10,4 +12,9 @@ def welcome():
 
 @index_bp.route('/')
 def index():
-    return render_template("index.html")
+    uid = request.cookies.get('uid', None)
+    if uid:
+        user = User.query.get(uid)
+        return render_template('index.html', user=user)
+    else:
+        return render_template("index.html")
