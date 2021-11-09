@@ -7,30 +7,43 @@
 {% endblock %}
 {% block content %}
 
-<div class="container content-container">
-    <div class="row justify-content-center">
-        <div class="col-12 inline-form-container">
-{#            <div class="col-lg-offset-1 col-md-8" style="margin-left: 220px">#}
-            <form method="post" style="margin-top: 90px;width: 100%">
-                {{ form.csrf_token() }}
-                {{ render_field(form.title,style="width:50%") }}
-                {{ render_field(form.categories,style="width:50%") }}
 
-                <div id="test-editormd" >{{ render_field(form.text,style="display:none;") }}</div>
+      <div class="container content-container">
+        <div class="row justify-content-center">
+            <div class="col-12 inline-form-container">
+                <!-- 文章表单开始 -->
+                {# 依据 endpoint 决定 action 属性的值 #}
 
-            </form>
-{#            </div>#}
+                <form action="{{ url_for('article.publish_article') }}" class="col-12" method="post" style="margin-top: 90px;width: 100%">>
+
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.title.label(class="sr-only") }}
+                    {{ form.title(class="form-control form-control-lg", placeholder="文章标题") }}
+                </div>
+                {{ form.categories.label(class='sr-only') }}
+                {# 渲染多选框 #}
+                {{ form.categories(title='请选择分类...') }}
+                <div class="mb-3"></div>
+
+                <!-- Editor.md 编辑器 -->
+                <div id="markdownEditor" name="Editor">
+                    {{ form.text(style="display:none;") }}
+                </div>
+
+                {{ form.submit(class='btn btn-info') }}
+                </form>
+                <!-- 文章表单结束 -->
         </div>
     </div>
 </div>
-
 
     <script src="{{ url_for('static',filename='editormd/examples/js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static',filename='editormd/src/editormd.js') }}"></script>
     <script type="text/javascript">
         var testEditor;
         $(function () {
-            testEditor = editormd("test-editormd", {
+            testEditor = editormd("markdownEditor", {
                 width: "100%",
                 height: 540,
                 syncScrolling: "single",

@@ -55,7 +55,7 @@ def login():
         res_list = User.query.filter_by(username=user_name).all()
         for user in res_list:
             if check_password_hash(user.password, password):
-                response = redirect(url_for('index.index'))
+                response = redirect(url_for('index.index', page=1))
                 response.set_cookie('uid', str(user.id), max_age=60*60*24)
                 return response
         else:
@@ -63,9 +63,9 @@ def login():
 
     return render_template("user/login.html", form=form, msg=None)
 
+
 @user_bp.route("/logout")
 def logout():
     response = redirect(url_for('index.index'))
-
     response.delete_cookie('uid')
     return response

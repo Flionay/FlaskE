@@ -1,34 +1,38 @@
 {% from 'bootstrap/form.html' import render_form %}
-{% block head %}
+{% extends 'base.html' %}
 
-    {% block title %}{% endblock %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% block styles -%}
-        {{ bootstrap.load_js() }}
-        {{ bootstrap.load_css() }}
-        <link href="/static/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-        <script src="/static/js/myjs.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{ bootstrap.load_js() }}
+    {{ bootstrap.load_css() }}
+    <link href="/static/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <script src="/static/js/myjs.js"></script>
 
-    {% endblock styles %}
-{% endblock head %}
 
-{% block page_content %}
-    <div class="container-fluid" style="margin: 50px auto">
-        <div class="row">
-            <div class="col-md-offset-1 col-md-7">
-{#                <h1 >欢迎登陆博客！</h1>#}
-                <img style='width: 95%' src="/static/img/undraw_Folder_files_re_2cbm.svg" alt="">
+{% block content %}
+<div class="container-fluid" style="margin: 90px auto">
+    <div class="row justify-content-md-center" style="height: 700px;margin-top: 40px">
+
+        <div class="col-md-4">
+            <div class="alert alert-success" role="alert" style="margin-top: 100px">
+                Welcom to My blog！
             </div>
-
-            <div class="col-md-3 col-md-offset-2" style="width: 70%; margin-top: 150px">
-                {{render_form(form)}}
-                {% if msg %}
-                <span style="color: red;font-size: 12px">{{ msg }}</span>
-                {% endif %}
-            </div>
-
+            <img style='width: 80%' src="{{ url_for('static', filename='/img/undraw_Folder_files_re_2cbm.svg') }}" alt="">
         </div>
+
+        <div class="col-md-3" style="width: 70%; margin-top: 180px">
+            {{render_form(form)}}
+            {% if msg %}
+            <span style="color: red;font-size: 12px">{{ msg }}</span>
+            {% endif %}
+        </div>
+
     </div>
+</div>
+
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
 
 {% endblock %}

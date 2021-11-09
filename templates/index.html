@@ -1,9 +1,84 @@
 {% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
 {% block head %}
     {{ super() }}
 {% endblock %}
 
 {% block content %}
+    <!-- main -->
+    <div class="container">
+        <div class="row">
+    <!--        left-->
+            <div class="col-md-4" style="margin-top: 80px;margin-bottom: 80px">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src='{{ url_for('static',filename='img/headimg.jpeg') }}' alt="Card_image_cap" >
+                    <div class="card-body">
+                        <h4 class="card-title" style="text-align: center">AngYi</h4>
+                        <p class="card-text" style="text-align: center" ><span><i class="fa fa-map-marker"></i></span> Qing Dao</p>
+                        <p class="card-text" style="text-align: center" >自律给人自由。</p>
+                        <p class="card-text" id = "time_now" style="text-align: center">xxxx</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px;margin-top: 25px">
+                    <div class="card" style="width: 18rem;" >
+                        <div class="card-body">
+                            <h5 class="card-title">分类</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item" >科技
+                                <span class="badge" >15</span>
+                            </li>
+                            <li class="list-group-item" >生活
+                                <span class="badge" >10</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">标签</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+
+            </div>
+    <!--        right-->
+            <div class="col-md-8" style="margin-top: 80px;margin-bottom: 80px"  >
+                {% for arti in article %}
+                <div class="card" style="height: 13rem; width:40em; margin-bottom: 15px" >
+                    <div class="row no-gutters" style="padding-top: 20px">
+
+                        <div class="col-md-8">
+                            <div class="card-body" style="vertical-align: middle;">
+
+                                <h5 class="my-font-title" ><a href="#" target="_blank">{{ arti.title }}</a></h5>
+                                <p class="my-font-description" >{{ arti.content|summary }}</p>
+                                <p class="my-font-time"><small class="text-muted">{{ arti.pdatetime}}</small></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" style="padding-right: 25px;margin:auto;" >
+                            <img src='{{ arti.img }}'  alt="..." class="card-img">
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="justify-content-center">{{ render_pagination(pagination) }}</div>
+
+            </div>
+        </div>
+    </div>
+
     {{ super() }}
 {% endblock %}
 
@@ -15,7 +90,6 @@
         time.innerHTML=showLocale(today);
         window.setTimeout("tick()", 1000);
 
-        var = document.getElementsByClassName("card-body");
     </script>
 {% endblock %}
 
